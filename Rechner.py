@@ -162,3 +162,65 @@ class Calculator:
             self.display_value.set(str(result))
         except:
             self.error('number')
+            
+    # Quadrat berechnen
+    def power(self):
+        """محاسبه توان با توان مشخص"""
+        try:
+            current = float(self.display_value.get())
+            result = current ** 2
+            self.display_value.set(str(result))
+        except:
+            self.error('number')
+
+    # Operation setzen
+    def set_operation(self, op):
+        # تنظیم عملگر برای محاسبه
+        try:
+            self.num1 = float(self.display_value.get())
+            self.operator = op
+            self.display_value.set("0")
+        except:
+            self.error('number')
+
+    # Ergebnis berechnen
+    def calculate_result(self):
+        # انجام محاسبه
+        if self.num1 is None or self.operator is None:
+            return
+        try:
+            num2 = float(self.display_value.get())
+
+            if self.operator == '+':
+                result = self.num1 + num2
+            elif self.operator == '-':
+                result = self.num1 - num2
+            elif self.operator == '*':
+                result = self.num1 * num2
+            elif self.operator == '/':
+                if num2 == 0:
+                    self.error('division')
+                    return
+                result = self.num1 / num2
+
+            # نمایش نتیجه
+            self.display_value.set(str(result))
+            self.num1 = None
+            self.operator = None
+
+        except:
+            self.error('error')
+
+    # Anzeige komplett entfernen
+    def clear(self):
+        self.display_value.set("0")
+        self.num1 = None
+        self.operator = None
+
+    def run(self):
+        self.window.mainloop()
+
+# GUI starten
+if __name__ == "__main__":
+    calc = Calculator()
+    calc.run()
