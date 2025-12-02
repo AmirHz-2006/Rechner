@@ -129,3 +129,36 @@ class Calculator:
             messagebox.showerror("Error", "Invalid number")
         elif e == 'negative_sqrt':
             messagebox.showerror("Error", "Cannot calculate square root of negative number")
+            
+    # Zahl bestimmen
+    def append_number(self, number):
+        current = self.display_value.get()
+
+        if current == "0" and number != ".":
+            self.display_value.set(number)
+        elif current == "0" and number == "0":
+            pass  # جلوگیری از صفرهای متوالی
+        else:
+            self.display_value.set(current + number)
+
+    # Letzte Zahl löschen
+    def backspace(self):
+        """پاک کردن آخرین رقم از نمایشگر"""
+        current = self.display_value.get()
+        if len(current) > 1:
+            self.display_value.set(current[:-1])
+        else:
+            self.display_value.set("0")
+
+    # Quadratwurzel berechnen
+    def square_root(self):
+        """محاسبه جذر عدد"""
+        try:
+            current = float(self.display_value.get())
+            if current < 0:
+                self.error('negative_sqrt')
+                return
+            result = math.sqrt(current)
+            self.display_value.set(str(result))
+        except:
+            self.error('number')
